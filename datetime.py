@@ -1,9 +1,18 @@
+import datetime 
+
+def get_period(start_day: str, n_days: int) -> list:
+    ''' get the list of string dates from <start_date> <n_days> backwards '''
+    datelst = [datetime.datetime.strptime(start_day, '%Y-%m-%d') - datetime.timedelta(days=x) for x in range(n_days)]
+    datelst = [x.strftime('%Y-%m-%d') for x in datelst]
+    
+    return datelst
+
 
 def convert_datetime(df, sin_cos=False):
     start_time = time.time()
     sh = df.shape
 
-    utilities.logger.info("datetime conversion started...")
+    print("datetime conversion started...")
     df['hour'] = df.created_ts.apply(get_hour)
     df['weekday'] = df.created_ts.apply(get_weekday)
     df['day'] = df.created_ts.apply(get_day)
@@ -16,7 +25,7 @@ def convert_datetime(df, sin_cos=False):
     else:
         tests.test_df_shape(sh, 3, df.shape)
   
-    utilities.logger.info(f"datetime conversion completed, time : {int(time.time() - start_time)}s")
+    print(f"datetime conversion completed, time : {int(time.time() - start_time)}s")
 
     return df
 
@@ -32,6 +41,6 @@ def dt_string_converter(df, dt_column, fmt="datetime"):
     try:
         assert df[dt_column].dtype == {"datetime":"<M8[ns]", "string":"object"}[fmt]
     except AssertionError:
-        logger.info(f"datetime string converter failed")
+        print(f"datetime string converter failed")
     
     return df
