@@ -1,10 +1,10 @@
 import re
 
 # Your input text
-text = "This is a sample text with 250 мл of something and also 1.250 гр of something else."
+text = "This is a sample text with 1,250 мл of something and also 1.250 гр of something else."
 
-# Define a regular expression pattern to match numbers (including those with decimal points) followed by мл or гр
-pattern = r'(\d+(?:\.\d+)?)\s*(мл|гр)'
+# Define a regular expression pattern to match numbers with optional comma or dot as the decimal separator, followed by мл or гр
+pattern = r'(\d+(?:[\.,]\d+)?)\s*(мл|гр)'
 
 # Use re.findall to find all matches in the text
 matches = re.findall(pattern, text)
